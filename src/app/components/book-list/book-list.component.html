@@ -1,0 +1,61 @@
+<div class="book-list-container">
+  <h2>Book List</h2>
+  <table
+    class="table table-bordered"
+    style="font-size: larger; text-align: center"
+  >
+    <thead>
+      <tr>
+        <th style="text-align: center">Title</th>
+        <th style="text-align: center">Author</th>
+        <th style="text-align: center">ISBN</th>
+        <th style="text-align: center">Available</th>
+        <th style="text-align: center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books">
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.isbn }}</td>
+        <td>{{ book.available ? "Yes" : "No" }}</td>
+        <td>
+          <button
+            *ngIf="!isLibrarian && book.available"
+            (click)="checkoutBook(book)"
+            class="btn btn-success"
+          >
+            Checkout
+          </button>
+          <button
+            *ngIf="isLibrarian"
+            [routerLink]="['/book/edit', book.id]"
+            class="btn btn-primary"
+          >
+            Edit
+          </button>
+          <span *ngIf="isLibrarian"> | </span>
+          <button
+            *ngIf="isLibrarian"
+            (click)="deleteBook(book.id)"
+            class="btn btn-danger"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Checked Out Books</h3>
+  <ul>
+    <li *ngFor="let book of checkedOutBooks" style="margin-bottom: 10px">
+      {{ book.title }} by {{ book.author }}
+      <button (click)="returnBook(book)" class="btn btn-primary">Return</button>
+    </li>
+  </ul>
+
+  <button *ngIf="isLibrarian" routerLink="/book/add" class="btn btn-success">
+    Add New Book
+  </button>
+</div>

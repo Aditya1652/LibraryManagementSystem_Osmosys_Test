@@ -1,0 +1,25 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" routerLink="/books"
+        ><span class="glyphicon glyphicon-book"></span> Library</a
+      >
+    </div>
+    <ul class="nav navbar-nav">
+      <li routerLinkActive="active">
+        <a routerLink="/books" *ngIf="isLoggedIn"> Books </a>
+      </li>
+      <li
+        routerLinkActive="active"
+        *ngIf="authService.currentUserValue?.role === 'Librarian'"
+      >
+        <a routerLink="/book/add">Add Book</a>
+      </li>
+      <li>
+        <a style="cursor: pointer" (click)="logout()" *ngIf="isLoggedIn">
+          <span class="glyphicon glyphicon-log-in"></span> Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
